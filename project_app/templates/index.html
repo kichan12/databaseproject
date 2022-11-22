@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Header-->
+<br /><br /><br />
+            
+        
+
+
+        <section class="search-sec py-5 mt-5">
+            <div class="container">
+                <form method="get" action="{% url 'search:searchResult'%}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-9 col-sm-12">
+                                    <input class="form-control search-slt form-control1" id="exampleFormControlSelect1" type="search" placeholder="검색 내용을 입력하세요." name="word" >
+                                </div>
+                                <div class="col-lg-3 col-sm-12">
+                                    <button type="submit" class="btn btn-dark wrn-btn">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <div class="container px-2">
+            <section class="section">
+                <div class="container">
+                    <div class="row mb-1">
+                        <div class="col-sm-6">
+                            <h2 class="posts-entry-title" style="font-weight:bold;">신상품
+
+                            </h2>
+                        </div>
+                        <div class="col-sm-6 text-sm-end"><a href="{% url 'post_list' %}" class="read-more">View All</a></div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for post_object in post_objects %}
+                    {% if forloop.counter0 < 3 %} <!--최근 게시글 3개만 띄우기 위한 조건문 forloop.counter0은 0부터 반복횟수를 센다. -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="post-entry-alt">
+                            <a href="/post_list/"{{ post_object.pk }}" class="img-link"><img src="{% static 'medicine.png' %}"
+                                    alt="Image" class="img-fluid"></a>
+                            <div class="excerpt">
+                                <h2><a href="/post_list/{{ post_object.pk }}">{{ post_object.title }}</a></h2>
+                                <div class="post-meta align-items-center text-left clearfix">
+                                    <span class="d-inline-block mt-1">By <a href="#">{{ post_object.author }}</a></span>
+                                    <span>&nbsp;-&nbsp; {{ post_object.created_at }}</span>
+                                </div>
+                                <p>{{ post_object.content }}</p>
+                                <p><a href="/post_list/{{ post_object.pk }}" class="read-more">Continue Reading</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}{% endif %}
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="post-entry-alt" style=padding-left:800px>
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example" style=margin:0 auto>
+                    <a href= "/vitamin" button type="button"  class="btn btn-danger">비타민 </button></a>
+                    <a href= "/mineral" button type="button"  class="btn btn-warning">미네랄</button></a>
+                    <a href= "/protein" button type="button"  class="btn btn-success">프로틴</button></a>   
+                </div>
+            </div>
+        </div>    </div>
+{%endblock%}
